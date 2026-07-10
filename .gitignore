@@ -221,5 +221,4 @@ __marimo__/
 
 
 # Persistant app data
-app/data/app.db
-
+app/data/
