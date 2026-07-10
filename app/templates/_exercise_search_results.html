@@ -1,0 +1,13 @@
+<ul class="plain">
+{% for exercise in exercises %}
+<li class="list-item" style="cursor:pointer;"
+    hx-get="{{ url_for('activities.activity_form', exercise_id=exercise.id, date=prefill_date or None) }}"
+    hx-target="#activity-form-container"
+    hx-swap="innerHTML"
+    hx-on::after-request='document.getElementById("exercise-search").value = {{ exercise.name|tojson }}; document.getElementById("exercise-results").innerHTML = "";'>
+  {{ exercise.name }}
+</li>
+{% else %}
+<li><small>No matching exercises.</small></li>
+{% endfor %}
+</ul>

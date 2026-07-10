@@ -1,0 +1,14 @@
+<li id="exercise-{{ exercise.id }}" class="list-item">
+  <a href="{{ url_for('exercises.exercise_detail', exercise_id=exercise.id) }}" style="flex:1;">
+    {{ exercise.name }}
+    <span class="unit-badge">
+      {% if exercise.has_weight %}🏋️{% endif %}
+      {% if exercise.has_duration %}⏱️{% endif %}
+      {% if exercise.has_reps %}🔢{% endif %}
+    </span>
+  </a>
+  <a href="{{ url_for('exercises.exercise_edit_page', exercise_id=exercise.id) }}"
+     role="button" class="icon-btn secondary" aria-label="Edit">
+    &#9998;
+  </a>
+</li>

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Open Workout App</h2>
+<div class="grid">
+  <a role="button" href="{{ url_for('exercises.exercises_list') }}">Exercises</a>
+  <a role="button" href="{{ url_for('activities.activities_list') }}">Activities</a>
+  <a role="button" href="{{ url_for('workouts.workouts_list') }}">Workouts</a>
+</div>
+<div class="grid" style="margin-top:1rem;">
+  <a role="button" class="secondary" href="{{ url_for('settings.settings_page') }}">&#9881;&#65039; Settings</a>
+</div>
+
+<a href="{{ url_for('activities.activity_new') }}" class="fab" aria-label="Add activity">
+  <span class="fab-icon">&#127947;&#65039;</span>
+  <span>+ Activity</span>
+</a>
+{% endblock %}

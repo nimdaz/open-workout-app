@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="top-bar">
+  <h2>Activities</h2>
+  <a role="button" href="{{ url_for('activities.activity_new') }}">+ New Activity</a>
+</div>
+
+<ul class="plain">
+{% for activity in activities %}
+<li class="list-item">
+  <span>
+    <strong>{{ activity.exercise.name }}</strong><br>
+    <small>{{ activity.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+  </span>
+  <span style="text-align:right;">
+    {{ activity.summary }}
+    {% if activity.settings %}<br><small>{{ activity.settings }}</small>{% endif %}
+    {% if activity.description %}<br><small>{{ activity.description }}</small>{% endif %}
+  </span>
+  <a href="{{ url_for('activities.activity_edit_page', activity_id=activity.id) }}"
+     role="button" class="icon-btn secondary" aria-label="Edit">&#9998;</a>
+</li>
+{% else %}
+<li><small>No activities yet. Tap "New Activity" to log one.</small></li>
+{% endfor %}
+</ul>
+
+<p style="margin-top:1.5rem;"><a href="{{ url_for('pages.index') }}">&larr; Back</a></p>
+{% endblock %}

@@ -1,0 +1,7 @@
+<ul id="exercise-list" class="plain">
+{% for exercise in exercises %}
+{% include '_exercise_row.html' %}
+{% else %}
+<li><small>No exercises yet. Add one below.</small></li>
+{% endfor %}
+</ul>

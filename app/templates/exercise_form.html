@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ 'Edit Exercise' if is_edit else 'Add Exercise' }}</h2>
+
+{% if error %}
+<article style="border-left: 4px solid var(--pico-del-color);">{{ error }}</article>
+{% endif %}
+
+<form method="post"
+      action="{{ url_for('exercises.exercise_update', exercise_id=exercise_id) if is_edit else url_for('exercises.exercise_create') }}">
+  <label>Name
+    <input type="text" name="name" value="{{ name }}" required autocomplete="off">
+  </label>
+
+  <fieldset>
+    <legend>Tracked fields</legend>
+    <label>
+      <input type="checkbox" name="has_weight" {% if has_weight %}checked{% endif %}>
+      &#127947;&#65039; Weight (kg)
+    </label>
+    <label>
+      <input type="checkbox" name="has_duration" {% if has_duration %}checked{% endif %}>
+      &#9201;&#65039; Duration (minutes)
+    </label>
+    <label>
+      <input type="checkbox" name="has_reps" {% if has_reps %}checked{% endif %}>
+      &#128290; Reps
+    </label>
+  </fieldset>
+
+  <label>Description
+    <textarea name="description" rows="3" placeholder="Optional notes about this exercise...">{{ description or '' }}</textarea>
+  </label>
+
+  <button type="submit">Save</button>
+  <a href="{{ url_for('exercises.exercises_list') }}" role="button" class="secondary">Cancel</a>
+</form>
+
+{% if is_edit %}
+<form method="post" action="{{ url_for('exercises.exercise_delete', exercise_id=exercise_id) }}"
+      onsubmit="return confirm('Delete this exercise? This also deletes its activities.');"
+      style="margin-top:1.5rem;">
+  <button type="submit" class="contrast">Delete Exercise</button>
+</form>
+{% endif %}
+{% endblock %}

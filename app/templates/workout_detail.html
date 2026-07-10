@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="top-bar">
+  <h2>{{ workout.label }}</h2>
+  <a role="button" href="{{ url_for('activities.activity_new', date=(workout.date.strftime('%Y-%m-%d') if workout.date != today else None)) }}">+ New Activity</a>
+</div>
+
+<form method="post" action="{{ url_for('workouts.workout_date_update', workout_id=workout.id) }}"
+      style="display:flex; gap:.5rem; align-items:flex-end; margin-bottom:.25rem;">
+  <label style="flex:1;">Date
+    <input type="date" name="date" value="{{ workout.date.strftime('%Y-%m-%d') }}"
+           class="{{ 'date-warning' if workout.date != today else '' }}">
+  </label>
+  <button type="submit" style="width:auto;">Update Date</button>
+</form>
+<p><small>Changing the date sets the time to 00:00 for every activity in this workout.</small></p>
+
+{% include '_workout_comment.html' %}
+
+<h4 style="margin-top:1.5rem;">Activities</h4>
+{% if activities %}
+<ul class="plain">
+{% for activity in activities %}
+<li class="list-item">
+  <span>
+    <strong>{{ activity.exercise.name }}</strong><br>
+    <small>{{ activity.timestamp.strftime('%H:%M') }}</small>
+  </span>
+  <span style="text-align:right;">
+    {{ activity.summary }}
+    {% if activity.settings %}<br><small>{{ activity.settings }}</small>{% endif %}
+    {% if activity.description %}<br><small>{{ activity.description }}</small>{% endif %}
+  </span>
+  <a href="{{ url_for('activities.activity_edit_page', activity_id=activity.id) }}"
+     role="button" class="icon-btn secondary" aria-label="Edit">&#9998;</a>
+</li>
+{% endfor %}
+</ul>
+{% else %}
+<p><small>No activities for this workout.</small></p>
+{% endif %}
+
+<p style="margin-top:1.5rem;"><a href="{{ url_for('workouts.workouts_list') }}">&larr; Back to workouts</a></p>
+{% endblock %}

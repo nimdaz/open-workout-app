@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="top-bar">
+  <h2>
+    {{ exercise.name }}
+    <span class="unit-badge">
+      {% if exercise.has_weight %}🏋️{% endif %}
+      {% if exercise.has_duration %}⏱️{% endif %}
+      {% if exercise.has_reps %}🔢{% endif %}
+    </span>
+  </h2>
+  <a href="{{ url_for('exercises.exercise_edit_page', exercise_id=exercise.id) }}" role="button" class="secondary icon-btn" aria-label="Edit">&#9998;</a>
+</div>
+
+{% if exercise.description %}
+<p><small>{{ exercise.description }}</small></p>
+{% endif %}
+
+{% if chart %}
+<div style="margin: .5rem 0 1.25rem;">
+  {{ chart.svg | safe }}
+  <p><small>{{ chart.title }}</small></p>
+</div>
+{% endif %}
+
+{% if activities %}
+<ul class="plain">
+{% for activity in activities %}
+<li class="list-item">
+  <span>{{ activity.timestamp.strftime('%Y-%m-%d %H:%M') }}</span>
+  <span style="text-align:right;">
+    {{ activity.summary }}
+    {% if activity.settings %}<br><small>{{ activity.settings }}</small>{% endif %}
+    {% if activity.description %}<br><small>{{ activity.description }}</small>{% endif %}
+  </span>
+  <a href="{{ url_for('activities.activity_edit_page', activity_id=activity.id) }}"
+     role="button" class="icon-btn secondary" aria-label="Edit">&#9998;</a>
+</li>
+{% endfor %}
+</ul>
+{% else %}
+<p><small>No activities logged for this exercise yet.</small></p>
+{% endif %}
+
+<p style="margin-top:1.5rem;"><a href="{{ url_for('exercises.exercises_list') }}">&larr; Back to exercises</a></p>
+{% endblock %}

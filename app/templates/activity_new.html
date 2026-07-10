@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>New Activity</h2>
+
+{% if prefill_date %}
+<p class="date-warning-banner">&#128197; Logging for {{ prefill_date }} (not today)</p>
+{% endif %}
+
+<input type="text" id="exercise-search" name="q"
+       placeholder="Type to search exercises..." autocomplete="off"
+       hx-get="{{ url_for('activities.activity_search') }}"
+       hx-vals='{"date": "{{ prefill_date }}"}'
+       hx-trigger="keyup changed delay:200ms, focus, load"
+       hx-target="#exercise-results"
+       hx-swap="innerHTML">
+
+<ul id="exercise-results" class="plain" style="margin-top:.25rem;"></ul>
+
+<div id="activity-form-container" style="margin-top:1rem;"></div>
+
+<p style="margin-top:1.5rem;"><a href="{{ url_for('activities.activities_list') }}">&larr; Back</a></p>
+{% endblock %}

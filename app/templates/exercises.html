@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="top-bar">
+  <h2>Exercises</h2>
+</div>
+
+{% include '_exercise_list.html' %}
+
+<form class="add-form" method="get" action="{{ url_for('exercises.exercise_new_page') }}">
+  <input type="text" name="name" placeholder="New exercise name" required autocomplete="off" style="flex:1;">
+  <button type="submit">Create</button>
+</form>
+
+<p style="margin-top:1.5rem;"><a href="{{ url_for('pages.index') }}">&larr; Back</a></p>
+{% endblock %}

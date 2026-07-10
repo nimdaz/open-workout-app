@@ -1,0 +1,10 @@
+<div id="workout-comment">
+  <form hx-post="{{ url_for('workouts.workout_comment_update', workout_id=workout.id) }}"
+        hx-target="#workout-comment"
+        hx-swap="outerHTML">
+    <label>Comment
+      <textarea name="comment" rows="3" placeholder="Notes about this workout...">{{ workout.comment or '' }}</textarea>
+    </label>
+    <button type="submit" style="width:auto;">Save Comment</button>
+  </form>
+</div>

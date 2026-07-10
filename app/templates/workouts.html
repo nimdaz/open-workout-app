@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Workouts</h2>
+
+<ul class="plain">
+{% for workout in workouts %}
+<li class="list-item">
+  <a href="{{ url_for('workouts.workout_detail', workout_id=workout.id) }}" style="flex:1;">
+    {{ workout.label }}
+  </a>
+  <small>{{ workout.activities|length }} activit{{ 'y' if workout.activities|length == 1 else 'ies' }}</small>
+</li>
+{% else %}
+<li><small>No workouts yet. Add an activity to create one.</small></li>
+{% endfor %}
+</ul>
+
+<p style="margin-top:1.5rem;"><a href="{{ url_for('pages.index') }}">&larr; Back</a></p>
+{% endblock %}

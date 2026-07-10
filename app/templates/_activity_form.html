@@ -1,0 +1,88 @@
+<article>
+  <h3>
+    {{ exercise.name }}
+    <span class="unit-badge">
+      {% if exercise.has_weight %}🏋️{% endif %}
+      {% if exercise.has_duration %}⏱️{% endif %}
+      {% if exercise.has_reps %}🔢{% endif %}
+    </span>
+  </h3>
+
+  {% if prefill_date %}
+  <p class="date-warning-banner">&#128197; This will be logged for {{ prefill_date }} (not today)</p>
+  {% endif %}
+
+  <form method="post" action="{{ url_for('activities.activity_add') }}">
+    <input type="hidden" name="exercise_id" value="{{ exercise.id }}">
+    <input type="hidden" name="date" value="{{ prefill_date }}">
+
+    {% if exercise.has_weight or exercise.has_duration %}
+    <div class="grid">
+      {% if exercise.has_weight %}
+      <label>&#127947;&#65039; Weight (kg)
+        <input type="number" step="0.5" inputmode="decimal" name="weight"
+               value="{{ last.weight if last and last.weight is not none else '' }}">
+      </label>
+      {% endif %}
+      {% if exercise.has_duration %}
+      <label>&#9201;&#65039; Duration (minutes)
+        <input type="number" step="0.5" inputmode="decimal" name="duration"
+               value="{{ last.duration if last and last.duration is not none else '' }}">
+      </label>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% if exercise.has_reps %}
+    <fieldset>
+      <legend>Reps</legend>
+      <div class="grid">
+        <input type="number" inputmode="numeric" name="reps1" placeholder="Set 1"
+               value="{{ reps_prefill[0] if reps_prefill[0] is not none else '' }}">
+        <input type="number" inputmode="numeric" name="reps2" placeholder="Set 2"
+               value="{{ reps_prefill[1] if reps_prefill[1] is not none else '' }}">
+        <input type="number" inputmode="numeric" name="reps3" placeholder="Set 3"
+               value="{{ reps_prefill[2] if reps_prefill[2] is not none else '' }}">
+      </div>
+    </fieldset>
+    {% endif %}
+
+    <div class="grid">
+      <label>Settings
+        <input type="text" name="settings" autocomplete="off"
+               value="{{ last.settings if last else '' }}">
+      </label>
+      <label>Adjustment
+        <select name="adjustment">
+          <option value="" {% if not last or not last.adjustment %}selected{% endif %}></option>
+          {% for a in adjustments %}
+          <option value="{{ a }}" {% if last and last.adjustment == a %}selected{% endif %}>{{ a }}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </div>
+    <label>Description
+      <textarea name="description" rows="2" placeholder="Optional notes about this activity..."></textarea>
+    </label>
+
+    <button type="submit">Save Activity</button>
+  </form>
+</article>
+
+{% if previous %}
+<h4>Previous activities</h4>
+<ul class="plain">
+  {% for activity in previous %}
+  <li class="list-item">
+    <span>{{ activity.timestamp.strftime('%Y-%m-%d %H:%M') }}</span>
+    <span style="text-align:right;">
+      {{ activity.summary }}
+      {% if activity.settings %}<br><small>{{ activity.settings }}</small>{% endif %}
+      {% if activity.description %}<br><small>{{ activity.description }}</small>{% endif %}
+    </span>
+    <a href="{{ url_for('activities.activity_edit_page', activity_id=activity.id) }}"
+       role="button" class="icon-btn secondary" aria-label="Edit">&#9998;</a>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
