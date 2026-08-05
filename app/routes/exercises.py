@@ -53,6 +53,19 @@ def exercise_create():
     db.session.commit()
     return redirect(url_for("exercises.exercises_list"))
 
+@bp.route("/search")
+def exercise_search():
+    query_text = request.args.get("q", "").strip()
+    if query_text:
+        exercises = (
+            Exercise.query.filter(Exercise.name.ilike(f"%{query_text}%"))
+            .order_by(Exercise.name)
+            .all()
+        )
+    else:
+        exercises = Exercise.query.order_by(Exercise.name).all()
+    return render_template("_exercise_list.html", exercises=exercises)
+    
 
 @bp.route("/<int:exercise_id>")
 def exercise_detail(exercise_id):
