@@ -4,6 +4,13 @@
   <h2>Exercises</h2>
 </div>
 
+<input type="text" id="exercise-list-search" name="q"
+       placeholder="Search exercises..." autocomplete="off"
+       hx-get="{{ url_for('exercises.exercise_search') }}"
+       hx-trigger="keyup changed delay:200ms"
+       hx-target="#exercise-list"
+       hx-swap="outerHTML">
+
 {% include '_exercise_list.html' %}
 
 <form class="add-form" method="get" action="{{ url_for('exercises.exercise_new_page') }}">

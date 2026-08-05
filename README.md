@@ -4,7 +4,7 @@ A small, self-hosted, mobile-first web app for logging exercises, activities,
 and workouts. Everything is stored locally in a SQLite database — no
 accounts, no cloud sync, no analytics.
 
-**Version:** 0.1.7
+**Version:** 0.1.8
 
 ## Features
 
