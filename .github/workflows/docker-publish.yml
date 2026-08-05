@@ -34,7 +34,7 @@ jobs:
       - name: Extract Docker image metadata
         id: meta
         uses: docker/metadata-action@v5
-       with:
+        with:
           images: ghcr.io/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
