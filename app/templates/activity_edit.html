@@ -14,13 +14,13 @@
   <div class="grid">
     {% if exercise.has_weight %}
     <label>&#127947;&#65039; Weight (kg)
-      <input type="number" step="0.5" inputmode="decimal" name="weight"
+      <input type="number" step="0.1" inputmode="decimal" name="weight"
              value="{{ activity.weight if activity.weight is not none else '' }}">
     </label>
     {% endif %}
     {% if exercise.has_duration %}
     <label>&#9201;&#65039; Duration (minutes)
-      <input type="number" step="0.5" inputmode="decimal" name="duration"
+      <input type="number" step="0.1" inputmode="decimal" name="duration"
              value="{{ activity.duration if activity.duration is not none else '' }}">
     </label>
     {% endif %}
